@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<robot name="motor_test" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Base box -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.25 0.25 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="wood">
+        <color rgba="0.7 0.5 0.3 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Rotating horizontal bar -->
+  <link name="bar_link">
+    <visual>
+      <geometry>
+        <box size="0.25 0.08 0.02"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Revolute joint connecting base to bar -->
+  <joint name="base_to_bar" type="revolute">
+    <parent link="base_link"/>
+    <child link="bar_link"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- =============================== -->
+  <!--      LEFT vertical bar          -->
+  <!-- =============================== -->
+  <link name="left_vertical_bar">
+    <visual>
+      <geometry>
+        <box size="0.02 0.08 0.20"/>  <!-- width, depth, height -->
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="bar_to_left_vertical" type="fixed">
+    <parent link="bar_link"/>
+    <child link="left_vertical_bar"/>
+    <!-- Position at left end of the bar (x = -0.125), bar is 0.02 m thick in z -->
+    <origin xyz="-0.125 0 0.11" rpy="0 0 0"/>
+  </joint>
+
+  <!-- =============================== -->
+  <!--      RIGHT vertical bar         -->
+  <!-- =============================== -->
+  <link name="right_vertical_bar">
+    <visual>
+      <geometry>
+        <box size="0.02 0.08 0.20"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="bar_to_right_vertical" type="fixed">
+    <parent link="bar_link"/>
+    <child link="right_vertical_bar"/>
+    <!-- Position at right end of the bar (x = +0.125) -->
+    <origin xyz="0.125 0 0.11" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- Semi-Octagon -->
+  
+  <link name="semi_octagon_bridge">
+    <visual>
+      <geometry>
+        <box size="0.27 0.08 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+      </material>
+    </visual>
+
+    <visual>
+      <geometry>
+        <box size="0.04 0.08 0.01"/> </geometry>
+      <origin xyz="-0.12 0 0.03" rpy="0 -0.785 0"/> 
+      <material name="blue"/>
+    </visual>
+
+    <visual>
+      <geometry>
+        <box size="0.04 0.08 0.01"/>
+      </geometry>
+      <origin xyz="0.12 0 0.03" rpy="0 0.785 0"/>
+      <material name="blue"/>
+    </visual>
+
+    <visual>
+      <geometry>
+        <box size="0.18 0.08 0.01"/>
+      </geometry>
+      <origin xyz="0 0 0.045" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <joint name="bar_to_bridge" type="fixed">
+    <parent link="bar_link"/>
+    <child link="semi_octagon_bridge"/>
+    <origin xyz="0 0 0.235" rpy="-1.5708 0 0"/>
+  </joint>
+
+</robot>
+

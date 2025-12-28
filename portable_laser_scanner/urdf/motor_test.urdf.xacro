@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot name="motor_test" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Base box -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.25 0.25 0.2"/> <!-- Adjust dimensions to match your cube -->
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="wood">
+        <color rgba="0.7 0.5 0.3 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Rotating bar -->
+  <link name="bar_link">
+    <visual>
+      <geometry>
+        <box size="0.57912 0.10795 0.01905"/> <!-- The long bar -->
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Revolute joint connecting base to bar -->
+  <joint name="base_to_bar" type="revolute">
+    <parent link="base_link"/>
+    <child link="bar_link"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/> <!-- Motor shaft position -->
+    <axis xyz="0 0 1"/> <!-- Rotation around Z-axis -->
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
+  </joint>
+
+</robot>
